@@ -2,8 +2,8 @@
 module.exports = function blocked (fn, options) {
     const opts = options || {};
     const start = process.hrtime();
-    const interval = 100;
-    const threshold = opts.threshold || 10;
+    const interval = opts.interval || 2500;
+    const threshold = opts.threshold || 200;
 
     return setInterval(function blockedTimer () {
         const delta = process.hrtime(start);
