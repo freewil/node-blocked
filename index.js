@@ -1,15 +1,15 @@
 
-module.exports = function (fn, options) {
-    var opts = options || {};
-    var start = process.hrtime();
-    var interval = 100;
-    var threshold = opts.threshold || 10;
+module.exports = function blocked (fn, options) {
+    const opts = options || {};
+    const start = process.hrtime();
+    const interval = 100;
+    const threshold = opts.threshold || 10;
 
-    return setInterval(function () {
-        var delta = process.hrtime(start);
-        var nanosec = delta[0] * 1e9 + delta[1];
-        var ms = nanosec / 1e6;
-        var n = ms - interval;
+    return setInterval(function blockedTimer () {
+        const delta = process.hrtime(start);
+        const nanosec = delta[0] * 1e9 + delta[1];
+        const ms = nanosec / 1e6;
+        const n = ms - interval;
 
         if (n > threshold) {
             fn(Math.round(n));
@@ -17,4 +17,3 @@ module.exports = function (fn, options) {
         start = process.hrtime();
     }, interval).unref();
 };
-
